@@ -1,7 +1,7 @@
-name: Token Test
+name: Token Test (verbose)
 
 on:
-  workflow_dispatch:  # lets you run it manually
+  workflow_dispatch:
 
 permissions:
   issues: write
@@ -10,13 +10,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Open issue via PAT
+      - name: Call Issues API with PAT (log everything)
         env:
           GH_PAT: ${{ secrets.TEAMGREEN_GH_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
-          curl -s -X POST \
+          set -e
+          echo "Repo: $REPO"
+          RESP_CODE=$(curl -sS -w "%{http_code}" -o resp.json \
+            -X POST \
             -H "Authorization: Bearer $GH_PAT" \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/$REPO/issues \
-            -d '{"title":"✅ PAT works","body":"Created from Token Test workflow."}'
+            -d '{"title":"✅ PAT works (verbose)","body":"Created by Token Test (verbose)."}')
+          echo "HTTP status: $RESP_CODE"
+          echo "Response body:"; cat resp.json; echo
+          test "$RESP_CODE" = "201"
