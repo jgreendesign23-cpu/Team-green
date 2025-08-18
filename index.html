@@ -1,181 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Team Green Bot</title>
-  <style>
-    :root{
-      --green:#2c7a7b;
-      --green-2:#225e57;
-      --accent:#22c55e;
-      --paper:#ffffff;
-      --page:#f0f4f8;
-      --ink:#0f172a;
-    }
-
-    /* Page */
-    html,body{height:100%;}
-    body{
-      margin:0; padding:0;
-      font-family: Arial, sans-serif;
-      color:var(--ink);
-      background:var(--page);
-    }
-    header{
-      background:var(--green);
-      color:#fff;
-      padding:22px 16px;
-      font-size:28px;
-      font-weight:bold;
-      text-align:center;
-      box-shadow:0 2px 8px rgba(0,0,0,.08);
-    }
-
-    /* Chat panel */
-    .chat-container{
-      max-width: 720px;
-      margin: 28px auto 100px;
-      padding: 18px;
-      background: var(--paper);
-      border-radius: 14px;
-      box-shadow: 0 6px 24px rgba(0,0,0,.08);
-    }
-    .messages{
-      max-height: 48vh;
-      overflow-y: auto;
-      padding-right: 6px;
-    }
-    .bubble{
-      display:inline-block;
-      padding:12px 14px;
-      border-radius: 12px;
-      margin: 8px 0;
-      line-height:1.35;
-      box-shadow: 0 1px 2px rgba(0,0,0,.06);
-    }
-    .bot{
-      background:#e6fffa;
-      border:1px solid #b2f5ea;
-    }
-    .user{
-      background:#f1f5f9;
-      border:1px solid #cbd5e1;
-      float:right;
-      clear:both;
-    }
-    .row{clear:both;}
-
-    /* Input row */
-    .input-area{
-      display:flex; gap:10px; margin-top:14px;
-    }
-    .input-area input{
-      flex:1;
-      padding:12px 12px;
-      border-radius: 8px;
-      border:1px solid #cbd5e1;
-      font-size:16px;
-      outline:none;
-    }
-    .input-area button{
-      padding:12px 18px;
-      border-radius: 8px;
-      border:none;
-      background: var(--green);
-      color:#fff;
-      cursor:pointer;
-      font-weight:600;
-    }
-    .input-area button:hover{ background: var(--green-2); }
-
-    /* Floating chat head + mini window toggle */
-    .chat-head{
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      width: 58px; height: 58px;
-      border-radius: 50%;
-      background: var(--green);
-      color:#fff;
-      display:flex; align-items:center; justify-content:center;
-      font-size:24px;
-      box-shadow: 0 10px 24px rgba(0,0,0,.18);
-      cursor:pointer;
-      z-index: 1000;
-    }
-    .chat-head:active{ transform: translateY(1px); }
-
-    /* Optional: floating mini window (we'll reuse main content) */
-    .mini{
-      position: fixed;
-      right: 18px;
-      bottom: 86px;
-      width: min(92vw, 380px);
-      max-height: 70vh;
-      background: var(--paper);
-      border-radius: 14px;
-      box-shadow: 0 12px 32px rgba(0,0,0,.18);
-      display:none;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 1000;
-    }
-    .mini header{
-      background: var(--green);
-      color:#fff;
-      padding: 10px 14px;
-      font-size: 18px;
-      text-align:left;
-    }
-    .mini .messages{ padding: 12px 14px; }
-    .mini .input-area{ padding: 0 12px 12px; }
-
-    /* Utility */
-    .hidden{ display:none !important; }
-    .sr-only{ position:absolute; left:-9999px; }
-  </style>
-</head>
 <body>
   <header>🌱 Team Green Bot</header>
 
-  <!-- Main page chat panel -->
-  <main class="chat-container" id="panel">
-    <div class="messages" id="messages"></div>
+  <!-- Main chat panel -->
+  <div class="chat-container">
+    <div class="message" id="messages">
+      <b>Bot:</b> Hello! I’m your Team Green helper bot 🌿
+    </div>
 
     <div class="input-area">
-      <input id="userInput" type="text" placeholder="Type a message..." autocomplete="off" />
+      <input id="userInput" type="text" placeholder="Type a message...">
       <button id="sendBtn">Send</button>
     </div>
-  </main>
+  </div>
 
-  <!-- Floating chat head & mini window -->
+  <!-- Floating chat head + mini window -->
   <button class="chat-head" id="chatHead" aria-label="Open chat">💬</button>
 
-  <section class="mini" id="miniChat" aria-label="Mini chat window">
-    <header>🌱 Team Green Bot
-      <button id="closeMini" style="float:right;background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer;">×</button>
-    </header>
-    <div class="messages" id="miniMessages"></div>
-    <div class="input-area">
-      <input id="miniInput" type="text" placeholder="Type a message..." autocomplete="off" />
-      <button id="miniSend">Send</button>
-    </div>
-  </section>
+  <div class="chat-window" id="chatWindow" hidden>
+    <h3>Team Green Bot</h3>
+    <p id="chatNote">Hey there! Team Green Bot is online 🌱</p>
+    <button id="closeChat">Close</button>
+  </div>
 
   <script>
-    /* ==========
-       Basic “brain”
-       ========== */
+  // Run after the DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const sendBtn   = document.getElementById('sendBtn');
+    const input     = document.getElementById('userInput');
+    const messages  = document.getElementById('messages');
 
-    // Keywords → replies (expand anytime)
-    const knowledge = [
-      {k:/hello|hi|hey/i, r:"Hey there! I’m your Team Green helper 🌱 How can I assist?"},
-      {k:/help|what can you do/i, r:"I can share quick tips, show project structure, and soon I’ll connect to a real AI brain."},
-      {k:/deploy|publish|github pages/i, r:"Deploy steps: commit → wait for Pages build → refresh your *.github.io URL. You can check Status → Deployments in GitHub."},
-      {k:/style|colors|theme/i, r:"Try editing the CSS variables in :root for instant theme changes (like --green and --accent)."},
-      {k:/roadmap|next step/i, r:"Next: add a tiny proxy (Cloudflare Worker) so I can call real AI safely without exposing keys."},
-      {k:/bug|broken|issue/i, r:"Check the browser console (⋮ → Developer tools) and the Deployments tab in GitHub for build logs."},
-    ];
+    // Add a chat line to the panel
+    function addMessage(text, who = 'user') {
+      const row = document.createElement('div');
+      row.className = 'message';
+      row.innerHTML = (who === 'user')
+        ? `<b>You:</b> ${text}`
+        : `<b>Bot:</b> ${text}`;
+      messages.insertAdjacentElement('afterend', row);
+      // small scroll assist (just in case)
+      row.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    // Very simple bot replies
+    function replyTo(text) {
+      const t = text.toLowerCase();
+      if (/^(hi|hello|hey)\b/.test(t))      return "Hi! How can I help? 🍃";
+      if (/\bhelp\b/.test(t))               return "Try: 'about', 'deploy', or 'docs'.";
+      if (/\babout\b/.test(t))              return "I’m Team Green Bot — a friendly helper for your site 🌿";
+      if (/\bdeploy\b/.test(t))             return "Your site redeploys automatically via GitHub Pages!";
+      return "I didn’t quite catch that, but I’m learning 🤖";
+    }
+
+    function handleSend() {
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, 'user');
+      input.value = '';
+      setTimeout(() => addMessage(replyTo(text), 'bot'), 250);
+    }
+
+    // Wire the Send button + Enter key
+    sendBtn.addEventListener('click', handleSend);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSend();
+      }
+    });
+
+    // Floating chat head logic
+    const chatHead   = document.getElementById('chatHead');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChat  = document.getElementById('closeChat');
+
+    chatHead.addEventListener('click', () => {
+      chatWindow.hidden = false;
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatWindow.hidden = true;
+    });
+  });
+  </script>
+</body>    ];
 
     const defaultReplies =
