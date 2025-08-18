@@ -7,137 +7,66 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f4f9f4;
+      background: #f0f4f8;
       margin: 0;
       padding: 0;
+      text-align: center;
     }
-    h1 {
-      margin-top: 50px;
-      color: #2a7a2a;
-    }
-    button {
-      padding: 15px 25px;
-      margin-top: 20px;
-      background: #2a7a2a;
+    header {
+      background: #2c7a7b;
       color: white;
-      border: none;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .chat-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .message {
+      background: #e6fffa;
+      padding: 10px;
       border-radius: 8px;
+      margin: 10px 0;
+      text-align: left;
+    }
+    .input-area {
+      display: flex;
+      margin-top: 15px;
+    }
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .input-area button {
+      margin-left: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #2c7a7b;
+      color: white;
       cursor: pointer;
-      font-size: 18px;
     }
-    button:hover {
-      background: #3da43d;
-    }
-    #botResponse {
-      margin-top: 30px;
-      font-size: 20px;
-      color: #333;
+    .input-area button:hover {
+      background: #225e5f;
     }
   </style>
 </head>
-<!-- Floating Chat Bot Bubble -->
-<style>
-  /* Bubble button (bottom-right) */
-  #chatBubble {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 64px;
-    height: 64px;
-    background: #2a7a2a;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-    cursor: pointer;
-    z-index: 1000;
-  }
+<body>
+  <header>🌱 Team Green Bot</header>
 
-  /* Chat window */
-  #chatWindow {
-    position: fixed;
-    bottom: 100px;        /* leaves room for bubble */
-    right: 20px;
-    width: 90vw;          /* mobile-friendly */
-    max-width: 360px;
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid rgba(0,0,0,0.08);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
-    padding: 16px;
-    display: none;        /* hidden until bubble is clicked */
-    z-index: 1000;
-  }
-
-  #chatWindow h3 {
-    margin: 0 0 10px 0;
-    color: #2a7a2a;
-    text-align: center;
-  }
-
-  /* Scrollable message area */
-  #chatMessages {
-    background: #fafafa;
-    border: 1px solid #e6e6e6;
-    border-radius: 10px;
-    padding: 8px;
-    max-height: 40vh;
-    overflow-y: auto;
-  }
-
-  /* Message bubbles */
-  .msg {
-    padding: 8px 12px;
-    border-radius: 14px;
-    margin: 6px 0;
-    max-width: 80%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-    line-height: 1.35;
-    word-break: break-word;
-  }
-  .msg-bot  { background: #eef3ee; color:#1a1a1a; }
-  .msg-user { background: #dff5e0; margin-left: auto; text-align: right; }
-
-  /* Input row */
-  #chatControls {
-    margin-top: 10px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  #chatInput {
-    flex: 1;
-    padding: 10px 12px;
-    border: 1px solid #cbd5d1;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-  #sendBtn {
-    padding: 10px 14px;
-    background: #2a7a2a;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  #sendBtn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  /* Close button */
-  #closeBtn {
-    margin-top: 10px;
-    width: 100%;
-    background: #e9ecef;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 0;
-    font-size: 16px;
-    cursor: pointer;
-  }
-</style>
+  <div class="chat-container">
+    <div class="message"><b>Bot:</b> Hello! I’m your Team Green helper bot 🌿</div>
+    <div class="input-area">
+      <input type="text" placeholder="Type a message..." />
+      <button>Send</button>
+    </div>
+  </div>
 </body>
 </html>
