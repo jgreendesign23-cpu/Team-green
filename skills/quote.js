@@ -1,20 +1,14 @@
 // skills/quote.js
-module.exports = {
-  canHandle(input) {
-    return input.toLowerCase().includes("quote");
-  },
-
-  handle(input) {
-    return `
-🚛 HaulNationAI - Quote Request
-Please provide the following details:
-- Pickup location
-- Drop-off location
-- Cargo type
-- Weight / size
-- Date needed
-
-Our dispatcher will review and send you an estimate!
-    `;
-  }
-};
+(function () {
+  window.TG_SKILLS = window.TG_SKILLS || [];
+  window.TG_SKILLS.push({
+    name: "quote",
+    canHandle(input) {
+      const t = (input || "").toLowerCase();
+      return t.includes("rate") || t.includes("quote") || t.includes("pricing");
+    },
+    handle() {
+      return "Tell me origin, destination, and weight/class (or equipment). I’ll give a quick estimate.";
+    }
+  });
+})();
