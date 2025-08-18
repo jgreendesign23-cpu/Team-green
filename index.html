@@ -36,7 +36,78 @@
     }
   </style>
 </head>
-<body>
+<!-- Floating Chat Bot Bubble -->
+<style>
+  #chatBubble {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #2a7a2a;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+  }
+
+  #chatWindow {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 250px;
+    background: #fff;
+    border-radius: 10px;
+    border: 2px solid #2a7a2a;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: none;
+    z-index: 1000;
+  }
+
+  #chatWindow h3 {
+    margin-top: 0;
+    color: #2a7a2a;
+  }
+
+  #chatWindow button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #2a7a2a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+
+<div id="chatBubble">💬</div>
+<div id="chatWindow">
+  <h3>Team Green Bot Says:</h3>
+  <p id="chatText">Click the bubble to chat!</p>
+  <button onclick="closeChat()">Close</button>
+</div>
+
+<script>
+  const bubble = document.getElementById('chatBubble');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatText = document.getElementById('chatText');
+
+  bubble.addEventListener('click', () => {
+    chatWindow.style.display = 'block';
+    chatText.innerText = 'Hey there! Team Green Bot is online 🌱';
+  });
+
+  function closeChat() {
+    chatWindow.style.display = 'none';
+  }
+</script>
+  <body>
   <h1>🌱 Welcome to Team Green Bot 🌱</h1>
   <button onclick="activateBot()">Activate Bot</button>
   <p id="botResponse"></p>
