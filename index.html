@@ -1,15 +1,51 @@
-<!doctype html><html><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title id="site-title">Loading…</title>
-<link rel="stylesheet" href="style.css">
-</head><body>
-<header class="hero hero-classic">
-  <h1 id="hero-headline">…</h1>
-  <p id="hero-sub">…</p>
-  <a id="cta" href="#" class="cta">Get Started</a>
-</header>
-<main>
-  <section><h2>About</h2><p id="about">This is a classic theme.</p></section>
-</main>
-<script src="script.js"></script>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Green Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f4f9f4;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      margin-top: 50px;
+      color: #2a7a2a;
+    }
+    button {
+      padding: 15px 25px;
+      margin-top: 20px;
+      background: #2a7a2a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    button:hover {
+      background: #3da43d;
+    }
+    #botResponse {
+      margin-top: 30px;
+      font-size: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌱 Welcome to Team Green Bot 🌱</h1>
+  <button onclick="activateBot()">Activate Bot</button>
+  <p id="botResponse"></p>
+
+  <script>
+    function activateBot() {
+      document.body.style.background = "#d7f7d7";
+      document.getElementById("botResponse").innerText = "✅ Team Green Bot Activated! Ready to roll 🚀";
+    }
+  </script>
+</body>
+</html>
