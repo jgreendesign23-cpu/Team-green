@@ -2,137 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HaulNationAI • Smart Dispatch • Real-time Logistics • AI Powered</title>
-  <meta name="description" content="HaulNationAI helps you manage logistics smarter, faster, and cheaper. Ask for quotes, tracking, and dispatch." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HaulNationAI</title>
+  <meta name="description" content="Smart Dispatch • Real-time Logistics • AI Powered" />
 
-  <!-- Fonts (system stack) + basic reset -->
   <style>
     :root{
-      --brand-blue:#1677ff;     /* keep existing palette */
-      --brand-teal:#00b894;
-      --brand-green:#00a67d;
-      --ink:#0b1b2b;
-      --muted:#5d6b7a;
+      --blue:#1976d2;        /* keep current colors */
+      --teal:#16a085;
+      --green:#2e7d32;
+      --muted:#f5f7fb;
+      --ink:#0f1720;
+      --text:#1b1f24;
       --card:#ffffff;
-      --bg:#f4f6f9;
-      --accent:#8a5b2f;         /* your footer bar color from screenshots (brownish) */
-      --shadow: 0 10px 30px rgba(14, 30, 52, .10);
-      --radius: 18px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;
-      color:var(--ink);
-      background:#fff;
+      --shadow:0 12px 40px rgba(16,24,40,.12);
+      --brand:#7a431f;       /* footer bar (unchanged) */
+      --bubble:#e9f5ea;
     }
 
-    /* Header band */
-    header.site-header{
-      background: linear-gradient(110deg, var(--brand-blue), var(--brand-teal) 55%, var(--brand-green));
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html,body { margin:0; padding:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:var(--text); background:#fff;}
+    img { max-width:100%; display:block;}
+
+    /* Header */
+    header{
       color:#fff;
-      padding:28px 20px 36px;
+      padding: clamp(28px, 6vw, 48px) 16px;
+      background: linear-gradient(100deg, var(--blue), var(--teal), var(--green));
+      box-shadow: inset 0 -8px 18px rgba(0,0,0,.06);
     }
-    .shell{max-width:1000px; margin:0 auto; padding:0 12px;}
-    .brand{
-      display:flex; align-items:center; gap:14px;
-      font-weight:800; letter-spacing:.2px;
-      font-size:clamp(28px, 5vw, 52px);
-      margin:4px 0 6px;
+    .head-wrap{
+      max-width:1060px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center;
     }
-    .brand .logo{font-size:38px; filter: drop-shadow(0 2px 0 rgba(0,0,0,.1));}
-    .tag{
-      margin:4px 0 0; opacity:.95; font-weight:600;
-      display:flex; flex-wrap:wrap; gap:.5rem;
-      font-size:clamp(14px, 2.8vw, 18px);
-    }
+    .brand-line{ font-size: clamp(34px, 6.5vw, 56px); font-weight:800; letter-spacing:.3px; margin:0; display:flex; align-items:center; gap:12px; }
+    .brand-line .emoji{ font-size: clamp(26px, 4.5vw, 40px); filter: drop-shadow(0 2px 2px rgba(0,0,0,.2));}
+    .tagline{ margin:10px 0 0 52px; font-size: clamp(14px, 3.2vw, 20px); opacity:.95; }
 
-    /* Welcome card */
-    .hero{
-      background: var(--bg);
-      padding: 18px 0 0;
-    }
+    /* main */
+    main{ max-width:1060px; margin: clamp(18px, 5vw, 36px) auto; padding: 0 16px 84px; }
+
     .card{
       background:var(--card);
-      border-radius:var(--radius);
+      border-radius:22px;
+      padding: clamp(18px, 4.5vw, 30px);
       box-shadow: var(--shadow);
-      padding: clamp(18px, 3.5vw, 28px);
-      margin: -40px auto 24px;
-      max-width: 960px;
-      border:1px solid rgba(13,47,80,.06);
+      margin: 0 auto;
     }
-    .card h1{
-      margin:0 0 8px;
-      font-size: clamp(26px, 4.5vw, 40px);
-      line-height:1.2;
-    }
-    .card p{
-      margin:0;
-      color:var(--muted);
-      font-size: clamp(16px, 2.8vw, 20px);
+    .welcome-title{ font-size: clamp(26px, 5.5vw, 40px); margin:0 0 14px; color:var(--ink); }
+    .welcome-copy{ font-size: clamp(16px, 3.8vw, 22px); line-height:1.5; margin:0; }
+
+    /* footer bar */
+    footer{
+      background:var(--brand);
+      color:#fff;
+      text-align:center;
+      padding: 18px 12px;
+      font-weight:600;
+      letter-spacing:.2px;
+      position:fixed; left:0; right:0; bottom:0;
     }
 
-    /* Footer bar */
-    footer.site-footer{
-      background: var(--accent);
-      color:#fff;
-      padding: 16px 12px;
-      text-align:center;
-      font-weight:700;
-      letter-spacing:.2px;
+    /* ==== Chat widget shell (site-side) ==== */
+    .tg-launcher{
+      position:fixed; right:18px; bottom:90px; z-index:1000;
+      width:68px; height:68px; border-radius:50%;
+      background:#fff; box-shadow: 0 10px 24px rgba(0,0,0,.18);
+      display:grid; place-items:center; cursor:pointer;
+    }
+    .tg-launcher:after{
+      content:""; position:absolute; inset:0; border-radius:inherit;
+      background: conic-gradient(#ffa658 0 90deg, #16a085 90deg 360deg);
+      z-index:-1; filter: blur(0.5px);
+    }
+    .tg-launcher .bubble{
+      width:46px; height:46px; border-radius:50%; background:var(--green);
+      display:grid; place-items:center; color:#fff; font-weight:800; font-size:22px;
+      box-shadow: inset 0 -6px 10px rgba(0,0,0,.15);
+    }
+
+    /* container where Team-green injects its chat window */
+    #tg-container{ position: fixed; right: 16px; bottom: 166px; width: min(420px, 94vw); z-index:1001; }
+    @media (max-width:520px){
+      #tg-container{ right: 8px; left: 8px; width: auto; }
+      .tagline{ margin-left: 44px; }
     }
   </style>
 </head>
 <body>
 
   <!-- ======= Header ======= -->
-  <header class="site-header">
-    <div class="shell">
-      <div class="brand">
-        <span class="logo" role="img" aria-label="truck">🚚</span>
-        <span>HaulNationAI</span>
+  <header>
+    <div class="head-wrap">
+      <div class="emoji">🚚</div>
+      <div>
+        <h1 class="brand-line">HaulNationAI</h1>
+        <div class="tagline">Smart Dispatch • Real-time Logistics • AI Powered</div>
       </div>
-      <div class="tag">Smart Dispatch • Real-time Logistics • AI Powered</div>
     </div>
   </header>
 
-  <!-- ======= Main / Welcome ======= -->
-  <main class="hero">
-    <div class="shell">
-      <section class="card" aria-labelledby="welcome">
-        <h1 id="welcome">Welcome</h1>
-        <p>
-          Our AI helps you manage logistics smarter, faster, and cheaper.
-          Click the chat bubble to talk to us!
-        </p>
-      </section>
-    </div>
+  <!-- ======= Main ======= -->
+  <main>
+    <section class="card">
+      <h2 class="welcome-title">Welcome</h2>
+      <p class="welcome-copy">
+        Our AI helps you manage logistics smarter, faster, and cheaper.
+        Click the chat bubble to talk to us!
+      </p>
+    </section>
   </main>
 
   <!-- ======= Footer ======= -->
-  <footer class="site-footer">
-    © 2025 HaulNationAI
-  </footer>
+  <footer>© 2025 HaulNationAI</footer>
 
-  <!-- ===========================================================
-       Team Green Bot (core + skills) — served from Team-green repo
-       If your Pages URL is different, update the base URL below.
-       =========================================================== -->
-  <!-- Skills (load before core so they’re ready) -->
+  <!-- ======= Chat Launcher (click to open Team-green UI) ======= -->
+  <button id="tg-open" class="tg-launcher" aria-label="Open chat">
+    <span class="bubble">💬</span>
+  </button>
+
+  <!-- Team-green will render its chat window inside this container -->
+  <div id="tg-container" aria-live="polite"></div>
+
+  <!-- ============================= -->
+  <!-- Team-green Bot (remote files) -->
+  <!-- ============================= -->
+
+  <!-- Core runtime -->
+  <script src="https://jgreendesign23-cpu.github.io/Team-green/core/bot.js"></script>
+
+  <!-- Skills: keep these BEFORE the UI script -->
   <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/hello.js"></script>
   <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/help.js"></script>
   <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/quote.js"></script>
   <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/tracking.js"></script>
   <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/dispatch.js"></script>
-<!-- Skills (new) -->
-<script src="skills/documents.js"></script>
-<script src="skills/coverage.js"></script>
-<script src="skills/contacts.js"></script>
-  <!-- Core chat UI + router -->
-  <script src="https://jgreendesign23-cpu.github.io/Team-green/script.js"></script>
-  <!-- Done. The chat launcher will appear automatically in the bottom-right. -->
+  <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/documents.js"></script>
+  <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/coverage.js"></script>
+  <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/contacts.js"></script>
 
+  <!-- UI / Router (loads last so it can find all skills) -->
+  <script src="https://jgreendesign23-cpu.github.io/Team-green/skills/ui.js"></script>
+
+  <!-- Small glue to open the chat window -->
+  <script>
+    (function(){
+      const openBtn = document.getElementById('tg-open');
+      const mount   = document.getElementById('tg-container');
+
+      // Expose a minimal site-config so Team-green can brand the header
+      window.TG_SITE = {
+        name: "HaulNationAI",
+        subtitle: "Smart Dispatch • Live Logistics",
+        emoji: "🚚"
+      };
+
+      // When launcher is tapped, ask Team-green UI to render (idempotent)
+      openBtn.addEventListener('click', () => {
+        if (window.TeamGreenUI && typeof window.TeamGreenUI.mount === 'function') {
+          window.TeamGreenUI.mount(mount, window.TG_SITE);
+        } else {
+          // If UI not ready yet, retry very shortly
+          const t = setInterval(() => {
+            if (window.TeamGreenUI && typeof window.TeamGreenUI.mount === 'function') {
+              clearInterval(t);
+              window.TeamGreenUI.mount(mount, window.TG_SITE);
+            }
+          }, 120);
+          setTimeout(() => clearInterval(t), 4000);
+        }
+      });
+    })();
+  </script>
 </body>
-  </html>
+    </html>
