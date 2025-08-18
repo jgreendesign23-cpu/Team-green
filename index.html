@@ -38,85 +38,106 @@
 </head>
 <!-- Floating Chat Bot Bubble -->
 <style>
+  /* Bubble button (bottom-right) */
   #chatBubble {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     background: #2a7a2a;
-    border-radius: 50%;
     color: #fff;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 22px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     z-index: 1000;
   }
 
+  /* Chat window */
   #chatWindow {
     position: fixed;
-    bottom: 90px;
+    bottom: 100px;        /* leaves room for bubble */
     right: 20px;
-    width: 250px;
+    width: 90vw;          /* mobile-friendly */
+    max-width: 360px;
     background: #fff;
-    border-radius: 10px;
-    border: 2px solid #2a7a2a;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    display: none;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+    padding: 16px;
+    display: none;        /* hidden until bubble is clicked */
     z-index: 1000;
   }
 
   #chatWindow h3 {
-    margin-top: 0;
+    margin: 0 0 10px 0;
     color: #2a7a2a;
+    text-align: center;
   }
 
-  #chatWindow button {
-    margin-top: 10px;
+  /* Scrollable message area */
+  #chatMessages {
+    background: #fafafa;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 8px;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  /* Message bubbles */
+  .msg {
     padding: 8px 12px;
+    border-radius: 14px;
+    margin: 6px 0;
+    max-width: 80%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    line-height: 1.35;
+    word-break: break-word;
+  }
+  .msg-bot  { background: #eef3ee; color:#1a1a1a; }
+  .msg-user { background: #dff5e0; margin-left: auto; text-align: right; }
+
+  /* Input row */
+  #chatControls {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  #chatInput {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #cbd5d1;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  #sendBtn {
+    padding: 10px 14px;
     background: #2a7a2a;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  #sendBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  /* Close button */
+  #closeBtn {
+    margin-top: 10px;
+    width: 100%;
+    background: #e9ecef;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 0;
+    font-size: 16px;
     cursor: pointer;
   }
 </style>
-
-<div id="chatBubble">💬</div>
-<div id="chatWindow">
-  <h3>Team Green Bot Says:</h3>
-  <p id="chatText">Click the bubble to chat!</p>
-  <button onclick="closeChat()">Close</button>
-</div>
-
-<script>
-  const bubble = document.getElementById('chatBubble');
-  const chatWindow = document.getElementById('chatWindow');
-  const chatText = document.getElementById('chatText');
-
-  bubble.addEventListener('click', () => {
-    chatWindow.style.display = 'block';
-    chatText.innerText = 'Hey there! Team Green Bot is online 🌱';
-  });
-
-  function closeChat() {
-    chatWindow.style.display = 'none';
-  }
-</script>
-  <body>
-  <h1>🌱 Welcome to Team Green Bot 🌱</h1>
-  <button onclick="activateBot()">Activate Bot</button>
-  <p id="botResponse"></p>
-
-  <script>
-    function activateBot() {
-      document.body.style.background = "#d7f7d7";
-      document.getElementById("botResponse").innerText = "✅ Team Green Bot Activated! Ready to roll 🚀";
-    }
-  </script>
 </body>
 </html>
