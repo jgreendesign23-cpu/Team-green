@@ -1,16 +1,18 @@
 // skills/help.js
-
 module.exports = {
   canHandle(input) {
-    return input.toLowerCase().includes("help");
+    const t = input.toLowerCase();
+    return t.includes("help") || t.includes("what can you do") || t === "menu";
   },
 
-  handle(input) {
-    return `
-📚 Team Green Bot Commands:
-- "hello" → Greets you
-- "help" → Shows this menu
-(more coming soon: dispatch, family, jokes...)
-    `;
+  handle() {
+    return [
+      "Here’s what I can help with:",
+      "• **Rate** – quick spot quote. Try: `rate Chicago to Dallas 40k dry van`",
+      "• **Tracking** – status by PRO/BOL. Try: `tracking PRO 4821937`",
+      "• **Dispatch** – book a pickup. Try: `schedule pickup`",
+      "",
+      "Just say the keyword (rate, tracking, dispatch) to begin."
+    ].join("\n");
   }
 };
