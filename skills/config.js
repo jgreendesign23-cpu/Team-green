@@ -1,13 +1,22 @@
-/* skills/config.js */
-(function () {
-  window.TG_CONFIG = window.TG_CONFIG || {};
-  window.TG_CONFIG.ORS_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImY3YWMxMGE5Y2QzMzRhNmY5ZTZjYmI2ZDVjNDdjYjc5IiwiaCI6Im11cm11cjY0In0=";   // <-- paste your key, in quotes
+// Team-green / skills / config.js
+// One place for all knobs your bot/site should use.
 
-  // optional pricing knobs
-  window.TG_CONFIG.PRICING = {
-    basePerMile: { van: 2.50, reefer: 2.65, flatbed: 2.55 },
-    fuelSurchargePerMile: 0.35,
-    perTonAdder: 50,
-    minimum: 250
-  };
-})();
+window.TG_CONFIG = {
+  BRAND: {
+    name: "HaulNationAI",
+    email: "rates@haulnation.ai",
+    phone: "(555) 555-5555"
+  },
+
+  // Pricing used by BOTH the chat quote skill and the on-page calculator.
+  PRICING: {
+    basePerMile: {
+      van: 2.00,
+      reefer: 2.40,
+      flatbed: 2.30
+    },
+    fuelSurchargePerMile: 0.35, // $/mile
+    perTonAdder: 50,            // $ per ton (based on user-entered tons)
+    minimum: 300                // minimum total
+  }
+};
